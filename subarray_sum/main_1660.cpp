@@ -18,26 +18,41 @@ int main()
     int n = 0, x = 0;
     cin >> n >> x;
 
-    vector<int> arr(n + 1);
+    vector<ll> sum(n + 1);
 
-    for (int i = 1; i <= n; i++)
+    for (auto i = 1; i <= n; i++)
     {
-        cin >> arr[i];
-        arr[i] += arr[i - 1];
+        cin >> sum[i];
+        sum[i] += sum[i - 1];
     }
 
-    int count = 0;
+    ll count = 0;
 
-    for (size_t i = 1; i <= n; i++)
+    // for (size_t i = 1; i <= n; i++)
+    // {
+    //     for (size_t j = i; j <= n; j++)
+    //     {
+    //         if (sum[j] - sum[i - 1] == x)
+    //             count++;
+    //     }
+    // }
+
+
+    // Optimized Approach
+
+    map<ll, int> countMap = {
+        {0, 1}
+    };
+
+    for(auto i = 1; i <= n; i++)
     {
-        for (size_t j = i; j <= n; j++)
-        {
-            if (arr[j] - arr[i - 1] == x)
-                count++;
-        }
+        ll targetValue = sum[i] - x;
+        count += countMap[targetValue];
+        countMap[sum[i]]++;
     }
 
     cout << count << endl;
+
 
     return 0;
 }
