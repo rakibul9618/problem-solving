@@ -13,6 +13,10 @@ typedef long long ll;
     cout.tie(0);
 #define endl '\n'
 
+const int mx = 1e5 + 123;
+ll sum[mx];
+ll cnt[mx]{0};
+
 int main()
 {
     int s = 0;
@@ -21,9 +25,9 @@ int main()
 
     for (int i = 1; i <= s; i++)
     {
+        memset(cnt, 0, sizeof(cnt));
         int n = 0, m = 0;
         cin >> n >> m;
-        vector<ll> sum(n + 1);
         for (auto j = 1; j <= n; j++)
         {
             cin >> sum[j];
@@ -31,14 +35,13 @@ int main()
         }
 
         ll ans = 0;
-        map<ll, int> countMap;
-        countMap[0]++;
+        cnt[0] = 1;
   
         for (auto j = 1; j <= n; j++)
         {
             ll targetValue = sum[j];
-            ans += countMap[targetValue];
-            countMap[sum[j]]++;
+            ans += cnt[targetValue];
+            cnt[sum[j]]++;
             
         }
         cout << ans << endl;
